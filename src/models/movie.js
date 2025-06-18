@@ -1,5 +1,6 @@
 const mongoose = require('mongoose')
 const { movieType } = require('../utils/utils')
+const { time } = require('../components/time')
 
 const moviveSchema = new mongoose.Schema({
     title: {
@@ -47,6 +48,11 @@ const moviveSchema = new mongoose.Schema({
     like: {
         type: Number,
         default: 0
+    },
+    time: {
+        type: String,
+        required: true,
+        default: time()
     }
 })
 

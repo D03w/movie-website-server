@@ -1,5 +1,6 @@
 const mongoose = require('mongoose')
 const { userRole } = require('../utils/utils')
+const { time } = require('../components/time')
 
 const userSchema = new mongoose.Schema({
     name: {
@@ -29,6 +30,11 @@ const userSchema = new mongoose.Schema({
         required: true,
         enums: userRole,
         default: 'user'
+    },
+    time: {
+        type: String,
+        required: true,
+        default: time()
     }
 })
 

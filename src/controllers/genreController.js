@@ -42,24 +42,6 @@ module.exports.getGenre = async (req, res) => {
         })
     }
 }
-module.exports.updateGenre = async (req, res) => {
-    try{
-        const id = req.params.id
-        const {name} = req.body
-
-        const updatedGenre = await Genre.findByIdAndUpdate(id, {name})
-
-        res.status(200).json({
-            message: "Janr muafaqiyatli yangilandi",
-            success: false
-        })
-    }catch(err){
-        res.status(500).json({
-            message: err.message,
-            success: false
-        })
-    }
-}
 
 module.exports.deleteGenre = async (req, res) => {
     try{
@@ -69,6 +51,52 @@ module.exports.deleteGenre = async (req, res) => {
 
         res.status(200).json({
             message: "Janr o'chirib tashlandi!",
+            success: true
+        })
+    }catch(err){
+        res.status(500).json({
+            message: err.message,
+            success: false
+        })
+    }
+}
+module.exports.updateGenre = async (req, res) => {
+    try{
+        const id = req.params.id
+
+        const {name} = req.body
+
+        const existGenre = await Genre.findOne({name})
+
+        if(existGenre){
+            return res.status(409).json({
+                message: "Bunday janr mavjud!",
+                success: false
+            })
+        }
+
+        const updateGenre = await Genre.findByIdAndUpdate(id, {name})
+
+        res.status(200).json({
+            message: "Janr yangilandi",
+            success: true
+        })
+    }catch(err){
+        res.status(500).json({
+            message: err.message,
+            success: false
+        })
+    }
+}
+
+module.exports.getOne = async (req, res) => {
+    try{
+        const id = req.params.id
+
+        const findOne = await Genre.findById(id)
+
+        res.status(200).json({
+            data: findOne,
             success: true
         })
     }catch(err){
