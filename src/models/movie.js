@@ -35,6 +35,17 @@ const moviveSchema = new mongoose.Schema({
                 }
                 return true
             }
+        },
+    },
+    season: {
+        type: Number,
+        validate: {
+            validator: (v) => {
+                if(this.movieType === "series" || this.movieType === "animeSeries"){
+                    return !!v
+                }
+                return true
+            }
         }
     },
     year: {

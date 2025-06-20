@@ -8,6 +8,7 @@ router.post('/', verifyToken, upload.fields([
     {name: 'photo', maxCount: 1},
     {name: 'trailer', maxCount: 1},
 ]), movieController.movieCreate)
+router.get('/', movieController.getMovie)
 
 
 module.exports = router
