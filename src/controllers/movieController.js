@@ -1,4 +1,5 @@
 const { Movie } = require("../models")
+const { movieType } = require("../utils/utils")
 
 module.exports.movieCreate = async (req, res) => {
     try{
@@ -35,6 +36,34 @@ module.exports.getMovie = async (req, res) => {
 
         res.status(200).json({
             data: allMovie,
+            success: true
+        })
+    }catch(err){
+        res.status(500).json({
+            message: err.message,
+            success: false
+        })
+    }
+}
+module.exports.updateMovies = async (req, res) => {
+    try{
+        const id = req.params.id
+    }catch(err){
+        res.status(500).json({
+            message: err.message,
+            success: false
+        })
+    }
+}
+
+module.exports.getOne = async (req, res) => {
+    try{
+        const id = req.params.id
+
+        const findMovie = await Movie.findById(id)
+
+        res.status(200).json({
+            data: findMovie,
             success: true
         })
     }catch(err){
