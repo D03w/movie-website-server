@@ -48,6 +48,14 @@ module.exports.getMovie = async (req, res) => {
 module.exports.updateMovies = async (req, res) => {
     try{
         const id = req.params.id
+        const {title, description, photo, genre, movieType, series, season, year, trailer} = req.body
+
+        const update = await Movie.findByIdAndUpdate(id, {title, description, photo: req.files['photo']?.[0] ? `http://localhost:3000/uploads/${req.files['photo']?.[0].filename}` : photo, genre, movieType, series, year, season, trailer: req.files['trailer']?.[0] ? `http://localhost:3000/uploads/${req.files['trailer']?.[0].filename}` : trailer})
+
+        res.status(200).json({
+            message: "Kino yangilandi!",
+            success: true
+        })
     }catch(err){
         res.status(500).json({
             message: err.message,
@@ -60,7 +68,7 @@ module.exports.getOne = async (req, res) => {
     try{
         const id = req.params.id
 
-        const findMovie = await Movie.findById(id)
+        const findMovie = await Movie.findById(id).populate("genre")
 
         res.status(200).json({
             data: findMovie,

@@ -1,4 +1,5 @@
 const mongoose = require('mongoose')
+const { time } = require('../components/time')
 
 const commentSchema = new mongoose.Schema({
     movie: {
@@ -14,6 +15,16 @@ const commentSchema = new mongoose.Schema({
     comment: {
         type: String,
         required: true
+    },
+    like: {
+        type: Number,
+        required: true,
+        default: 0
+    },
+    time: {
+        type: String,
+        required: true,
+        default: time()
     }
 })
 
